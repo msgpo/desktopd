@@ -1,0 +1,8 @@
+[Unit]
+Description=Desktop Integration Manager
+
+[Service]
+ExecStart=/usr/libexec/desktopd /etc/desktopd.config
+
+[Install]
+WantedBy=graphical.target
