@@ -238,12 +238,16 @@ impl <'a> LineParser<'a> {
 }
 
 fn is_alphanum_or_dash(c: char) -> bool {
-    c.is_ascii() && (c.is_alphanumeric() || c == '-')
+    is_ascii(c) && (c.is_alphanumeric() || c == '-')
+}
+
+fn is_ascii(c: char) -> bool {
+    c as u32 <= 0x7F
 }
 
 fn is_first_char_alphabetic(s: &str) -> bool {
     if let Some(c) = s.chars().next() {
-        return c.is_ascii() && c.is_alphabetic()
+        return is_ascii(c) && c.is_alphabetic()
     }
     false
 }
@@ -273,13 +277,13 @@ fn is_valid_action(action: &str) -> bool {
 
 fn is_valid_group(group: &str) -> bool {
     is_first_char_alphabetic(group) && group.chars().all(|c| {
-        c.is_ascii() && !c.is_control()
+        is_ascii(c) && !c.is_control()
     })
 }
 
 fn is_valid_exec(val: &str) -> bool {
     val.chars().all(|c| {
-        c.is_ascii() && !(c.is_control() || c as u32 == 0)
+        is_ascii(c) && !(c.is_control() || c as u32 == 0)
     })
 }
 
